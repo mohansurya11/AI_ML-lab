@@ -1,0 +1,51 @@
+Aim:
+Implement and demonstrate the FIND-S algorithm for finding the most specific hypothesis based on a given set of training data samples. Read the training data from a .CSV file.
+Code:
+import pandas as pd
+import numpy as np
+
+#to read the data in the csv file
+data = pd.read_csv("C://users/siva/sport.csv")
+print(data,"n")
+
+#making an array of all the attributes
+d = np.array(data)[:,:-1]
+print("n The attributes are: ",d)
+
+#segragating the target that has positive and negative examples
+target = np.array(data)[:,-1]
+print("n The target is: ",target)
+
+#training function to implement find-s algorithm
+def train(c,t):
+    for i, val in enumerate(t):
+        if val == "Yes":
+specific_hypothesis = c[i].copy()
+            break
+
+    for i, val in enumerate(c):
+        if t[i] == "Yes":
+            for x in range(len(specific_hypothesis)):
+                if val[x] != specific_hypothesis[x]:
+specific_hypothesis[x] = '?'
+                else:
+                    pass
+
+    return specific_hypothesis
+
+#obtaining the final hypothesis
+print("n The final hypothesis is:",train(d,target))
+
+
+Result:
+Sky   Temp  Humidity     Wind  Water  Forecast  EnjoySport
+0  1  Sunny   Warm    Normal   Strong   Warm      Same         Yes
+1  2  Sunny   Warm      High   Strong   Warm      Same         Yes
+2  3  Rainy   Cold      High   Strong   Warm    Change          No
+3  4  Sunny   Warm      High   Strong   Cool    Change         Yes n
+n The attributes are:  [[1 'Sunny ' 'Warm ' 'Normal ' 'Strong ' 'Warm ' 'Same ']
+ [2 'Sunny ' 'Warm ' 'High ' 'Strong ' 'Warm ' 'Same ']
+ [3 'Rainy ' 'Cold ' 'High ' 'Strong ' 'Warm ' 'Change ']
+ [4 'Sunny ' 'Warm ' 'High ' 'Strong ' 'Cool ' 'Change ']]
+n The target is:  ['Yes' 'Yes' 'No' 'Yes']
+nThe final hypothesis is: ['?' 'Sunny ' 'Warm ' '?' 'Strong ' '?' '?']
